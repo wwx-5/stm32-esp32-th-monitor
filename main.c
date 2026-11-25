@@ -6,14 +6,6 @@
 #include "oled.h"
 #include "usart.h"
 
-/*****************³Ë·çµ¥Æ¬»ú¹¤×÷ÊÒ******************
-  ÏîÄ¿		:	STM32-DHT11´«¸ĞÆ÷
-  °æ±¾		: 	V0.0
-  MCU		:	STM32F103C8T6
-  ßÙÁ¨ßÙÁ¨	:	³Ë·çµ¥Æ¬»ú¹¤×÷ÊÒ
-  CSDN		:	³Ë·çµ¥Æ¬»ú¹¤×÷ÊÒ
-  µ¥Æ¬»ú¶¨ÖÆ+V£ºcfdz788 QQ£º3883997176  ×éÍÅÓÅ»İ¶à¶à
-****************************************************/
 
 
 
@@ -29,25 +21,25 @@ void Serial_SendString(char *Str)
 }
 int main(void)
 { 
-	//ÅäÖÃÏµÍ³Ê±ÖÓÎª72M
+	//é…ç½®ç³»ç»Ÿæ—¶é’Ÿä¸º72M
 	SystemInit();	
 	delay_init(72);
 	LED_Init();
 	LED_On();
 
-	USART1_Config();//´®¿Ú³õÊ¼»¯
+	USART1_Config();//ä¸²å£åˆå§‹åŒ–
 	OLED_Init();
 	DHT11_Init();
 	delay_ms(1000);
 	
 	USART1_Config();
 	
-	//ÏÔÊ¾¡°ÎÂ¶È£º¡±
+	//æ˜¾ç¤ºâ€œæ¸©åº¦ï¼šâ€
 	OLED_ShowChinese(1,1,0);
 	OLED_ShowChinese(1,2,1);
 	OLED_ShowChar(1,5, ':');
 	OLED_ShowChar(1,9, 'C');	
-	//ÏÔÊ¾¡°Êª¶È£º¡±
+	//æ˜¾ç¤ºâ€œæ¹¿åº¦ï¼šâ€
 	OLED_ShowChinese(2,1, 2);
 	OLED_ShowChinese(2,2, 1);
 	OLED_ShowChar(2, 5, ':');	
@@ -55,14 +47,14 @@ int main(void)
 	
   while (1)
   {
-		DHT11_Read_Data(&temp,&humi);//Êı¾İ»ñÈ¡
+		DHT11_Read_Data(&temp,&humi);//æ•°æ®è·å–
 		printf("temp %d ,humi %d\r\n",temp,humi);
 		LED_Toggle();
 		delay_ms(1000);
 
-		OLED_ShowNum(1,6,temp,2);	//ÏÔÊ¾ÎÂ¶ÈÊı¾İ
+		OLED_ShowNum(1,6,temp,2);	//æ˜¾ç¤ºæ¸©åº¦æ•°æ®
 
-		OLED_ShowNum(2,6,humi,2);	//ÏÔÊ¾Êª¶ÈÊı¾İs
+		OLED_ShowNum(2,6,humi,2);	//æ˜¾ç¤ºæ¹¿åº¦æ•°æ®s
 		sprintf  (str,"temp %d,humi %d\r\n",temp ,humi);
 	 Serial_SendString (str );
 		delay_ms (1000); 
