@@ -44,4 +44,4 @@ DHT11 --1-Wire--> STM32 --UART115200--> ESP32 --HTTP--> 手机
    修复：增加帧头 `$` 与校验 `*CS`，接收端用状态机解析。
 
 ## 
-< img src="screenshot.jpg" width="480" alt="手机访问ESP32网页显示DHT11温湿度">
+![STM32 + ESP32 温湿度监测页面](screenshot.jpg)
