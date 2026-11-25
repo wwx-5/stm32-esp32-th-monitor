@@ -1,50 +1,43 @@
 #include "dht11.h"
 #include "delay.h"
       
-/*****************³Ë·çµ¥Æ¬»ú¹¤×÷ÊÒ******************
-  ÏîÄ¿		:	STM32DHT11´«¸ĞÆ÷
-  °æ±¾		: 	V0.0
-  MCU		:	STM32F103C8T6
-  ßÙÁ¨ßÙÁ¨	:	³Ë·çµ¥Æ¬»ú¹¤×÷ÊÒ
-  CSDN		:	³Ë·çµ¥Æ¬»ú¹¤×÷ÊÒ
-****************************************************/	
-			
 
-void DHT11_Rst(void)	   //¸´Î»DHT11
+
+void DHT11_Rst(void)	   //å¤ä½DHT11
 {
 	//SET OUTPUT
 	DHT11_Mode(OUT);
-	//À­µÍDQ
+	//æ‹‰ä½DQ
 	DHT11_Low;
-	//Ö÷»úÀ­µÍ18~30ms
+	//ä¸»æœºæ‹‰ä½18~30ms
 	delay_ms(20);
-	//À­¸ßDQ
+	//æ‹‰é«˜DQ
 	DHT11_High;
-	//Ö÷»úÀ­¸ß10~35us
+	//ä¸»æœºæ‹‰é«˜10~35us
 	delay_us(13);     	
 }
 
 
 /*==========================================================
-Name£º		DHT11_Check
-Function£º	µÈ´ıDHT11µÄ»ØÓ¦
-pars:		ÎŞ
-return£º	1:Î´¼ì²âµ½DHT11µÄ´æÔÚ
-			0:¼ì²âµ½DHT11µÄ´æÔÚ
-notes£º		ÎŞ
+Nameï¼š		DHT11_Check
+Functionï¼š	ç­‰å¾…DHT11çš„å›åº”
+pars:		æ— 
+returnï¼š	1:æœªæ£€æµ‹åˆ°DHT11çš„å­˜åœ¨
+			0:æ£€æµ‹åˆ°DHT11çš„å­˜åœ¨
+notesï¼š		æ— 
 ==========================================================*/
 uint8_t DHT11_Check(void) 	   
 {   
 	uint8_t retry=0;
 	DHT11_Mode(IN);//SET INPUT	 
-    while (GPIO_ReadInputDataBit(DHT11_GPIO_PORT,DHT11_GPIO_PIN)&&retry<100)//DHT11»áÀ­µÍ40~80us
+    while (GPIO_ReadInputDataBit(DHT11_GPIO_PORT,DHT11_GPIO_PIN)&&retry<100)//DHT11ä¼šæ‹‰ä½40~80us
 	{
 		retry++;
 		delay_us(1);
 	};	 
 	if(retry>=100)return 1;
 	else retry=0;
-    while (!GPIO_ReadInputDataBit(DHT11_GPIO_PORT,DHT11_GPIO_PIN)&&retry<100)//DHT11À­µÍºó»áÔÙ´ÎÀ­¸ß40~80us
+    while (!GPIO_ReadInputDataBit(DHT11_GPIO_PORT,DHT11_GPIO_PIN)&&retry<100)//DHT11æ‹‰ä½åä¼šå†æ¬¡æ‹‰é«˜40~80us
 	{
 		retry++;
 		delay_us(1);
@@ -54,38 +47,38 @@ uint8_t DHT11_Check(void)
 }
 
 /*==========================================================
-Name£º		DHT11_Read_Bit
-Function£º	¶ÁÈ¡DHT11Ò»Î»
-pars:		ÎŞ
-return£º	1/0
-notes£º		ÎŞ
+Nameï¼š		DHT11_Read_Bit
+Functionï¼š	è¯»å–DHT11ä¸€ä½
+pars:		æ— 
+returnï¼š	1/0
+notesï¼š		æ— 
 ==========================================================*/
 uint8_t DHT11_Read_Bit(void) 			 
 {
  	uint8_t retry=0;
-	while(GPIO_ReadInputDataBit(DHT11_GPIO_PORT,DHT11_GPIO_PIN)&&retry<100)//µÈ´ı±äÎªµÍµçÆ½
+	while(GPIO_ReadInputDataBit(DHT11_GPIO_PORT,DHT11_GPIO_PIN)&&retry<100)//ç­‰å¾…å˜ä¸ºä½ç”µå¹³
 	{
 		retry++;
 		delay_us(1);
 	}
 	retry=0;
-	while(!GPIO_ReadInputDataBit(DHT11_GPIO_PORT,DHT11_GPIO_PIN)&&retry<100)//µÈ´ı±ä¸ßµçÆ½
+	while(!GPIO_ReadInputDataBit(DHT11_GPIO_PORT,DHT11_GPIO_PIN)&&retry<100)//ç­‰å¾…å˜é«˜ç”µå¹³
 	{
 		retry++;
 		delay_us(1);
 	}
-	delay_us(40);//µÈ´ı40us
+	delay_us(40);//ç­‰å¾…40us
 	if(GPIO_ReadInputDataBit(DHT11_GPIO_PORT,DHT11_GPIO_PIN))return 1;
 	else return 0;		   
 }
 
 
 /*==========================================================
-Name£º		DHT11_Read_Byte
-Function£º	¶ÁÈ¡DHT11Ò»¸ö×Ö½Ú
-pars:		ÎŞ
-return£º	¶Áµ½µÄÊı¾İ
-notes£º		ÎŞ
+Nameï¼š		DHT11_Read_Byte
+Functionï¼š	è¯»å–DHT11ä¸€ä¸ªå­—èŠ‚
+pars:		æ— 
+returnï¼š	è¯»åˆ°çš„æ•°æ®
+notesï¼š		æ— 
 ==========================================================*/
 uint8_t DHT11_Read_Byte(void)    
 {        
@@ -100,29 +93,29 @@ uint8_t DHT11_Read_Byte(void)
 }
 
 /*==========================================================
-Name£º		DHT11_Read_Data
-Function£º	¶ÁÈ¡DHT11Êı¾İ
-pars:		temp:ÎÂ¶È
-			humi:Êª¶È
-return£º	0-¶ÁÈ¡³É¹¦
-			1-¶ÁÈ¡Ê§°Ü
-notes£º		ÎŞ
+Nameï¼š		DHT11_Read_Data
+Functionï¼š	è¯»å–DHT11æ•°æ®
+pars:		temp:æ¸©åº¦
+			humi:æ¹¿åº¦
+returnï¼š	0-è¯»å–æˆåŠŸ
+			1-è¯»å–å¤±è´¥
+notesï¼š		æ— 
 ==========================================================*/
 uint8_t DHT11_Read_Data(uint8_t *temp,uint8_t *humi)    
 {
  	uint8_t buff[5];
 	uint8_t i;
-	DHT11_Rst(); //·¢ËÍÆğÊ¼ĞÅºÅ
-	if(DHT11_Check()==0) //µÈ´ıÏìÓ¦
+	DHT11_Rst(); //å‘é€èµ·å§‹ä¿¡å·
+	if(DHT11_Check()==0) //ç­‰å¾…å“åº”
 	{
-		for(i=0;i<5;i++)//¶ÁÈ¡40Î»Êı¾İ
+		for(i=0;i<5;i++)//è¯»å–40ä½æ•°æ®
 		{
 			buff[i]=DHT11_Read_Byte();
 		}
 		if((buff[0]+buff[1]+buff[2]+buff[3])==buff[4])
 		{
-			*humi=buff[0];		//ÎÂ¶ÈÊı¾İ
-			*temp=buff[2];		//Êª¶ÈÊı¾İ
+			*humi=buff[0];		//æ¸©åº¦æ•°æ®
+			*temp=buff[2];		//æ¹¿åº¦æ•°æ®
 		}
 	}
 	else return 1;
@@ -130,26 +123,26 @@ uint8_t DHT11_Read_Data(uint8_t *temp,uint8_t *humi)
 }
  
 /*==========================================================
-Name£º		DHT11_Init
-Function£º	³õÊ¼»¯DHT11µÄIO¿Ú£¬Í¬Ê±¼ì²âDHT11µÄ´æÔÚ
-pars:		temp:ÎÂ¶È
-			humi:Êª¶È
-return£º	0-´æÔÚ 
-			1-²»´æÔÚ
-notes£º		ÎŞ
+Nameï¼š		DHT11_Init
+Functionï¼š	åˆå§‹åŒ–DHT11çš„IOå£ï¼ŒåŒæ—¶æ£€æµ‹DHT11çš„å­˜åœ¨
+pars:		temp:æ¸©åº¦
+			humi:æ¹¿åº¦
+returnï¼š	0-å­˜åœ¨ 
+			1-ä¸å­˜åœ¨
+notesï¼š		æ— 
 ==========================================================*/
 uint8_t DHT11_Init(void)
 {	 
  	GPIO_InitTypeDef  GPIO_InitStructure;	
- 	RCC_APB2PeriphClockCmd(DHT11_GPIO_CLK, ENABLE);	 	//Ê¹ÄÜPA¶Ë¿ÚÊ±ÖÓ
- 	GPIO_InitStructure.GPIO_Pin = DHT11_GPIO_PIN;		//¶Ë¿ÚÅäÖÃ
- 	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP; 	//ÍÆÍìÊä³ö
+ 	RCC_APB2PeriphClockCmd(DHT11_GPIO_CLK, ENABLE);	 	//ä½¿èƒ½PAç«¯å£æ—¶é’Ÿ
+ 	GPIO_InitStructure.GPIO_Pin = DHT11_GPIO_PIN;		//ç«¯å£é…ç½®
+ 	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP; 	//æ¨æŒ½è¾“å‡º
  	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
- 	GPIO_Init(DHT11_GPIO_PORT, &GPIO_InitStructure);	//³õÊ¼»¯IO¿Ú
- 	GPIO_SetBits(DHT11_GPIO_PORT,DHT11_GPIO_PIN);		//Êä³ö¸ßµçÆ½
+ 	GPIO_Init(DHT11_GPIO_PORT, &GPIO_InitStructure);	//åˆå§‹åŒ–IOå£
+ 	GPIO_SetBits(DHT11_GPIO_PORT,DHT11_GPIO_PIN);		//è¾“å‡ºé«˜ç”µå¹³
 			    
-	DHT11_Rst();  //·¢ËÍÆğÊ¼ĞÅºÅ
-	return DHT11_Check();//µÈ´ıDHT11µÄ»ØÓ¦
+	DHT11_Rst();  //å‘é€èµ·å§‹ä¿¡å·
+	return DHT11_Check();//ç­‰å¾…DHT11çš„å›åº”
 } 
 
 void DHT11_Mode(uint8_t mode)
