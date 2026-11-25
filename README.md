@@ -14,7 +14,7 @@ DHT11 --1-Wire--> STM32 --UART115200--> ESP32 --HTTP--> 手机
 ## 硬件接线
 | 信号 | STM32 | 对端 |
 |------|-------|------|
-| DHT11 DATA | PAx（按实际） | DHT11 DATA |
+| DHT11 DATA | PA6 | DHT11 DATA |
 | I2C SCL/SDA | PB6 / PB7 | OLED |
 | UART1 TX/RX | PA9 / PA10 | ESP32 GPIO16(RX2) / 17(TX2) |
 
