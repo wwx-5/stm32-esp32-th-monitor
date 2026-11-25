@@ -4,37 +4,30 @@
 #include "stm32f10x.h"
 #include "delay.h"
 
-/*****************³Ë·çµ¥Æ¬»ú¹¤×÷ÊÒ******************
-  ÏîÄ¿		:	STM32¹âÃôµç×è´«¸ĞÆ÷
-  °æ±¾		: 	V0.0
-  MCU		:	STM32F103C8T6
-  ßÙÁ¨ßÙÁ¨	:	³Ë·çµ¥Æ¬»ú¹¤×÷ÊÒ
-  CSDN		:	³Ë·çµ¥Æ¬»ú¹¤×÷ÊÒ
-****************************************************/	
 
 
-/***************×Ô¶¨ÒåĞŞ¸Ä****************/
-//DHT11Òı½Åºê¶¨Òå
+/***************è‡ªå®šä¹‰ä¿®æ”¹****************/
+//DHT11å¼•è„šå®å®šä¹‰
 #define DHT11_GPIO_PORT  GPIOA
 #define DHT11_GPIO_PIN   GPIO_Pin_6
 #define DHT11_GPIO_CLK   RCC_APB2Periph_GPIOA
 /*********************END**********************/
 
-//Êä³ö×´Ì¬¶¨Òå
+//è¾“å‡ºçŠ¶æ€å®šä¹‰
 #define OUT 1
 #define IN  0
 
-//¿ØÖÆDHT11Òı½ÅÊä³ö¸ßµÍµçÆ½
+//æ§åˆ¶DHT11å¼•è„šè¾“å‡ºé«˜ä½ç”µå¹³
 #define DHT11_Low  GPIO_ResetBits(DHT11_GPIO_PORT,DHT11_GPIO_PIN)
 #define DHT11_High GPIO_SetBits(DHT11_GPIO_PORT,DHT11_GPIO_PIN)
 
 
-uint8_t DHT11_Init(void);//³õÊ¼»¯DHT11
-uint8_t DHT11_Read_Data(uint8_t *temp,uint8_t *humi);//¶ÁÈ¡ÎÂÊª¶ÈÊı¾İ
-uint8_t DHT11_Read_Byte(void);//¶ÁÈ¡Ò»¸ö×Ö½ÚµÄÊı¾İ
-uint8_t DHT11_Read_Bit(void);//¶ÁÈ¡Ò»Î»µÄÊı¾İ
-void DHT11_Mode(uint8_t mode);//DHT11Òı½ÅÊä³öÄ£Ê½¿ØÖÆ
-uint8_t DHT11_Check(void);//¼ì²âDHT11
-void DHT11_Rst(void);//¸´Î»DHT11   
+uint8_t DHT11_Init(void);//åˆå§‹åŒ–DHT11
+uint8_t DHT11_Read_Data(uint8_t *temp,uint8_t *humi);//è¯»å–æ¸©æ¹¿åº¦æ•°æ®
+uint8_t DHT11_Read_Byte(void);//è¯»å–ä¸€ä¸ªå­—èŠ‚çš„æ•°æ®
+uint8_t DHT11_Read_Bit(void);//è¯»å–ä¸€ä½çš„æ•°æ®
+void DHT11_Mode(uint8_t mode);//DHT11å¼•è„šè¾“å‡ºæ¨¡å¼æ§åˆ¶
+uint8_t DHT11_Check(void);//æ£€æµ‹DHT11
+void DHT11_Rst(void);//å¤ä½DHT11   
 
 #endif
